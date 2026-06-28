@@ -1,5 +1,10 @@
 package com.ariannavilchez.todo.repository;
 
-public interface ListItemRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ariannavilchez.todo.model.ListItem;
+
+// @Repository
+public interface ListItemRepository extends JpaRepository<ListItem, Long> {
 
 }
