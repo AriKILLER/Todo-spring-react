@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ariannavilchez.todo.model.Task;
+import com.ariannavilchez.todo.model.TaskType;
 import com.ariannavilchez.todo.repository.TaskRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,14 @@ public class TaskService {
     }
 
     public Task save(Task task){
+
+        if(task.getType() != TaskType.LIST){
+            if(task.getDueDate() != null){
+                task.setType(TaskType.REMINDER);
+            }else{
+                task.setType(TaskType.NOTE);
+            }
+        }
         task.setCreatedAt(LocalDateTime.now());
         return taskRepository.save(task);
     }
@@ -32,6 +41,13 @@ public class TaskService {
     public Task update(Long id,Task task){
         Task existingTask = findById(id);
         if (existingTask != null) {
+            if(task.getType() != TaskType.LIST){
+            if(task.getDueDate() != null){
+                task.setType(TaskType.REMINDER);
+            }else{
+                task.setType(TaskType.NOTE);
+            }
+        }
             task.setId(id);
             return taskRepository.save(task);
         }
